@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -14,11 +11,11 @@ public class Player : MonoBehaviour
 
     private int _health = 50;
 
-    public event UnityAction<int> HealthChanged;
+    public event UnityAction<float> HealthChanged;
 
     private void Start()
     {
-        HealthChanged?.Invoke(_health);
+        HealthChanged?.Invoke((float)_health / _maxHealth);
     }
 
     private void OnEnable()
@@ -35,21 +32,13 @@ public class Player : MonoBehaviour
 
     private void AddHp()
     {
-        _health += _amountHealthChanged;
-
-        if (_health > _maxHealth)
-            _health = _maxHealth;
-
-        HealthChanged?.Invoke(_health);
+        _health = Mathf.Clamp(_health + _amountHealthChanged, 0, _maxHealth);
+        HealthChanged?.Invoke((float) _health / _maxHealth);
     }
 
     private void RemoveHp()
     {
-        _health -= _amountHealthChanged;
-
-        if (_health < 0)
-            _health = 0;
-
-        HealthChanged?.Invoke(_health);
+        _health = Mathf.Clamp(_health - _amountHealthChanged, 0, _maxHealth);
+        HealthChanged?.Invoke((float)_health / _maxHealth);
     }
 }

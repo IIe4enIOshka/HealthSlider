@@ -430,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1576120109}
   _slider: {fileID: 1716045013}
-  _step: 0.005
+  _duration: 1
 --- !u!114 &880035966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,7 +997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buttonAdd: {fileID: 1547944052}
   _buttonRemove: {fileID: 1160757692}
-  _amountHealthChanged: 30
+  _amountHealthChanged: 10
   _maxHealth: 100
 --- !u!212 &1576120110
 SpriteRenderer:

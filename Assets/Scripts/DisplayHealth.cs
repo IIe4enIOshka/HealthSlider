@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +6,7 @@ public class DisplayHealth : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private Image _slider;
-    [SerializeField] private float _step;
-
-    private float _health;
+    [SerializeField] private float _duration;
 
     private void OnEnable()
     {
@@ -21,13 +18,20 @@ public class DisplayHealth : MonoBehaviour
         _player.HealthChanged -= OnHealthChanged;
     }
 
-    private void OnHealthChanged(int health)
+    private void OnHealthChanged(float health)
     {
-        _health = health;   
+        StartCoroutine(Filling(_slider.fillAmount, health));
     }
 
-    void Update()
+    private IEnumerator Filling(float startValue, float endValue)
     {
-        _slider.fillAmount = Mathf.MoveTowards(_slider.fillAmount, _health / 100, _step);
+        float elapsed = 0;
+
+        while (elapsed < _duration)
+        {
+            _slider.fillAmount = Mathf.Lerp(startValue, endValue, elapsed / _duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 }
