@@ -8,6 +8,8 @@ public class DisplayHealth : MonoBehaviour
     [SerializeField] private Image _slider;
     [SerializeField] private float _duration;
 
+    private Coroutine _coroutine;
+
     private void OnEnable()
     {
         _player.HealthChanged += OnHealthChanged;
@@ -20,7 +22,10 @@ public class DisplayHealth : MonoBehaviour
 
     private void OnHealthChanged(float health)
     {
-        StartCoroutine(Filling(_slider.fillAmount, health));
+        if(_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(Filling(_slider.fillAmount, health));
     }
 
     private IEnumerator Filling(float startValue, float endValue)
